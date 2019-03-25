@@ -4,24 +4,16 @@ import android.content.Intent;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.widget.Toast;
 
 import com.limamauricio.bakingapp.R;
-import com.limamauricio.bakingapp.model.Ingredient;
 import com.limamauricio.bakingapp.model.Recipe;
 import com.limamauricio.bakingapp.model.Step;
-import com.limamauricio.bakingapp.ui.adapter.RecipeIngredientsAdapter;
-import com.limamauricio.bakingapp.ui.adapter.RecipeStepsAdapter;
 import com.limamauricio.bakingapp.ui.fragments.RecipeDetailsFragment;
-import com.limamauricio.bakingapp.ui.fragments.VideoPlayerFragment;
+import com.limamauricio.bakingapp.ui.fragments.StepDetailsFragment;
 
 import java.io.Serializable;
 import java.util.List;
-
-import butterknife.BindView;
-import butterknife.ButterKnife;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDetailsFragment.OnStepClickListener {
 
@@ -82,15 +74,15 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
     public void onStepClicked(int position) {
         if (mTwoPanel){
 
-            VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+            StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
             Bundle args = new Bundle();
             args.putSerializable("recipeSteps", (Serializable) steps);
             args.putInt("stepIndex",steps.get(position).getId());
             args.putBoolean("twoPanel",mTwoPanel);
-            videoPlayerFragment.setArguments(args);
+            stepDetailsFragment.setArguments(args);
             FragmentManager fragmentManager = getSupportFragmentManager();
             fragmentManager.beginTransaction()
-                    .replace(R.id.video_container, videoPlayerFragment)
+                    .replace(R.id.video_container, stepDetailsFragment)
                     .commit();
 
         }else{
@@ -110,15 +102,15 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
 
     private void initFragments(){
 
-        VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+        StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable("recipeSteps", (Serializable) steps);
         args.putInt("stepIndex",step.getId());
         args.putBoolean("twoPanel",mTwoPanel);
-        videoPlayerFragment.setArguments(args);
+        stepDetailsFragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.video_container, videoPlayerFragment)
+                .add(R.id.video_container, stepDetailsFragment)
                 .commit();
 
     }
