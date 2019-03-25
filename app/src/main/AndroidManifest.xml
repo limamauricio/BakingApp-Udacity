@@ -14,8 +14,6 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".ui.StepDetailActivity">
-
-
         </activity>
         <activity android:name=".ui.RecipeDetailsActivity" />
         <activity android:name=".ui.MainActivity">

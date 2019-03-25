@@ -1,24 +1,18 @@
 package com.limamauricio.bakingapp.ui;
 
 import android.content.Intent;
-import android.os.PersistableBundle;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.AppCompatButton;
-import android.view.View;
-import android.widget.TextView;
 
 import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Step;
-import com.limamauricio.bakingapp.ui.fragments.VideoPlayerFragment;
+import com.limamauricio.bakingapp.ui.fragments.StepDetailsFragment;
 
 import java.io.Serializable;
 import java.util.List;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
 
 public class StepDetailActivity extends AppCompatActivity {
 
@@ -41,14 +35,14 @@ public class StepDetailActivity extends AppCompatActivity {
 
     private void initFragments(){
 
-        VideoPlayerFragment videoPlayerFragment = new VideoPlayerFragment();
+        StepDetailsFragment stepDetailsFragment = new StepDetailsFragment();
         Bundle args = new Bundle();
         args.putSerializable("recipeSteps", (Serializable) steps);
         args.putInt("stepIndex",step.getId());
-        videoPlayerFragment.setArguments(args);
+        stepDetailsFragment.setArguments(args);
         FragmentManager fragmentManager = getSupportFragmentManager();
         fragmentManager.beginTransaction()
-                .add(R.id.video_container, videoPlayerFragment)
+                .add(R.id.video_container, stepDetailsFragment)
                 .commit();
 
     }
