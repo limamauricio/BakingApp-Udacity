@@ -13,7 +13,7 @@ public class Ingredient implements Serializable
     @SerializedName("quantity")
     @Getter
     @Setter
-    private Integer quantity;
+    private Double quantity;
 
     @SerializedName("measure")
     @Getter
