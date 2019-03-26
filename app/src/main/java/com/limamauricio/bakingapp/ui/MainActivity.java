@@ -2,6 +2,7 @@ package com.limamauricio.bakingapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -11,17 +12,23 @@ import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Recipe;
 import com.limamauricio.bakingapp.proxy.Proxy;
 import com.limamauricio.bakingapp.proxy.ProxyFactory;
 import com.limamauricio.bakingapp.ui.adapter.RecipeAdapter;
+import com.limamauricio.bakingapp.utils.SharedPreferencesService;
 import com.limamauricio.bakingapp.utils.Utils;
+import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
+import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import lombok.Getter;
+import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -37,19 +44,27 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
 
     private RecipeAdapter recipeAdapter;
     private boolean twoPane;
+    private SharedPreferencesService sharedPreferencesService;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        this.sharedPreferencesService = new SharedPreferencesService(this);
 
+        if (savedInstanceState != null){
+            recipeList = (List<Recipe>) savedInstanceState.getSerializable("myRecipeList");
+            recipeAdapter.setRecipes(recipeList);
+
+        }else{
+            prepareRecyclerview();
+            checkNetworkConnection(this);
+        }
         if (findViewById(R.id.txt_id) != null)
             twoPane = true;
         else
             twoPane = false;
-        prepareRecyclerview();
-        checkNetworkConnection(this);
 
     }
 
@@ -117,4 +132,43 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
         startActivity(intent);
         Toast.makeText(MainActivity.this, recipeList.get(itemId - 1).getName(), Toast.LENGTH_SHORT).show();
     }
+
+    @Override
+    public void onAddToWidgetClickListener(int itemId) {
+        Toast.makeText(MainActivity.this, recipeList.get(itemId - 1).getName(), Toast.LENGTH_SHORT).show();
+        //setRecipeItem();
+        Gson gson = new Gson();
+        String recipeData = gson.toJson(recipeList.get(itemId - 1));
+        sharedPreferencesService.storeRecipe(recipeData);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        if (getIntent() != null && getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
+
+            String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
+            Gson gson = new Gson();
+            gson.fromJson(recipeData,Recipe.class);
+            setIntent(null);
+
+            Intent intent = new Intent(MainActivity.this,RecipeDetailsActivity.class);
+            Bundle bundle = new Bundle();
+            bundle.putSerializable("recipe",gson.fromJson(recipeData,Recipe.class));
+            intent.putExtras(bundle);
+            startActivity(intent);
+
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        List<Recipe> recipes = recipeList;
+        outState.putSerializable("myRecipeList", (Serializable) recipes);
+    }
+
 }
