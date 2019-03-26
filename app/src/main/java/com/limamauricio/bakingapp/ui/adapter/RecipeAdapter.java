@@ -17,6 +17,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import lombok.Getter;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
@@ -82,9 +83,17 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
             int elementId = recipes.get(getAdapterPosition()).getId();
             mItemClickListener.onItemClickListener(elementId);
         }
+
+        @OnClick(R.id.btnAddWidget)
+        public void btnAddtoWidgetClicked(){
+            int elementId = recipes.get(getAdapterPosition()).getId();
+            mItemClickListener.onAddToWidgetClickListener(elementId);
+
+        }
     }
 
     public interface ItemClickListener {
         void onItemClickListener(int itemId);
+        void onAddToWidgetClickListener(int itemId);
     }
 }
