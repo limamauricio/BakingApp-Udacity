@@ -52,15 +52,13 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         this.sharedPreferencesService = new SharedPreferencesService(this);
-
-        if (savedInstanceState != null){
-            recipeList = (List<Recipe>) savedInstanceState.getSerializable("myRecipeList");
-            recipeAdapter.setRecipes(recipeList);
-
-        }else{
-            prepareRecyclerview();
+        prepareRecyclerview();
+        if (savedInstanceState == null){
             checkNetworkConnection(this);
+
         }
+        setDataToAdapter();
+
         if (findViewById(R.id.txt_id) != null)
             twoPane = true;
         else
@@ -93,9 +91,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
                 public void onResponse(Call<List<Recipe>> call, Response<List<Recipe>> response) {
 
                     recipeList = response.body();
-                    recipeAdapter.setRecipes(recipeList);
-                    recipeRecyclerView.setAdapter(recipeAdapter);
-
+                    setDataToAdapter();
 
                 }
 
@@ -109,6 +105,13 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
             Toast.makeText(MainActivity.this, getString(R.string.no_internet), Toast.LENGTH_SHORT).show();
         }
 
+
+    }
+
+    private void setDataToAdapter(){
+
+        recipeAdapter.setRecipes(recipeList);
+        recipeRecyclerView.setAdapter(recipeAdapter);
 
     }
 
@@ -166,9 +169,17 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-
         List<Recipe> recipes = recipeList;
         outState.putSerializable("myRecipeList", (Serializable) recipes);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        recipeList = (List<Recipe>) savedInstanceState.getSerializable("myRecipeList");
+        recipeAdapter.setRecipes(recipeList);
+
+
     }
 
 }
