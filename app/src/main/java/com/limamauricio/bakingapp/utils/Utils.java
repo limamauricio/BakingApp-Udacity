@@ -4,6 +4,10 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+import com.limamauricio.bakingapp.model.Recipe;
+
+import java.util.List;
+
 public class Utils {
 
     public static boolean checkInternetConnection(Context context){
@@ -22,4 +26,12 @@ public class Utils {
     }
 
 
+    public static boolean checkEmptyList(List<Recipe> recipeList) {
+
+        if (recipeList == null || recipeList.isEmpty())
+            return true;
+        else
+            return false;
+
+    }
 }
