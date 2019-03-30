@@ -15,8 +15,13 @@ import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Ingredient;
 import com.limamauricio.bakingapp.model.Recipe;
 import com.limamauricio.bakingapp.model.Step;
+import com.limamauricio.bakingapp.ui.RecipeDetailsActivity;
 import com.limamauricio.bakingapp.ui.adapter.RecipeIngredientsAdapter;
 import com.limamauricio.bakingapp.ui.adapter.RecipeStepsAdapter;
+
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -49,6 +54,7 @@ public class RecipeDetailsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
+        EventBus.getDefault().register(this);
 
         try {
             mCallback = (OnStepClickListener) context;
@@ -56,6 +62,17 @@ public class RecipeDetailsFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnStepClickListener");
         }
+    }
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Recipe recipeWidget){
+
+        Intent i = new Intent(getActivity(),RecipeDetailsActivity.class);
+        Bundle bundle = new Bundle();
+        bundle.putSerializable("recipe",recipeWidget);
+        i.putExtras(bundle);
+        //i.putExtra("recipe",recipeWidget);
+        getActivity().startActivity(i);
+
     }
 
     public RecipeDetailsFragment(){

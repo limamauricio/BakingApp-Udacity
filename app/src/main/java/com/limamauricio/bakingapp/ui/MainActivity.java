@@ -22,6 +22,8 @@ import com.limamauricio.bakingapp.utils.SharedPreferencesService;
 import com.limamauricio.bakingapp.utils.Utils;
 import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
+import org.greenrobot.eventbus.EventBus;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -153,14 +155,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
 
             String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
             Gson gson = new Gson();
-            gson.fromJson(recipeData,Recipe.class);
             setIntent(null);
 
-            Intent intent = new Intent(MainActivity.this,RecipeDetailsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("recipe",gson.fromJson(recipeData,Recipe.class));
-            intent.putExtras(bundle);
-            startActivity(intent);
+            EventBus.getDefault().post(gson.fromJson(recipeData,Recipe.class));
 
         }
 
