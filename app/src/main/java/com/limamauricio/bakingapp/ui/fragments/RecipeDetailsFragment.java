@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Ingredient;
 import com.limamauricio.bakingapp.model.Recipe;
@@ -18,6 +19,7 @@ import com.limamauricio.bakingapp.model.Step;
 import com.limamauricio.bakingapp.ui.RecipeDetailsActivity;
 import com.limamauricio.bakingapp.ui.adapter.RecipeIngredientsAdapter;
 import com.limamauricio.bakingapp.ui.adapter.RecipeStepsAdapter;
+import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -54,7 +56,6 @@ public class RecipeDetailsFragment extends Fragment {
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
-        EventBus.getDefault().register(this);
 
         try {
             mCallback = (OnStepClickListener) context;
@@ -62,17 +63,6 @@ public class RecipeDetailsFragment extends Fragment {
             throw new ClassCastException(context.toString()
                     + " must implement OnStepClickListener");
         }
-    }
-    @Subscribe(threadMode = ThreadMode.MAIN)
-    public void onEvent(Recipe recipeWidget){
-
-        Intent i = new Intent(getActivity(),RecipeDetailsActivity.class);
-        Bundle bundle = new Bundle();
-        bundle.putSerializable("recipe",recipeWidget);
-        i.putExtras(bundle);
-        //i.putExtra("recipe",recipeWidget);
-        getActivity().startActivity(i);
-
     }
 
     public RecipeDetailsFragment(){
@@ -87,6 +77,7 @@ public class RecipeDetailsFragment extends Fragment {
                 container, false);
 
         ButterKnife.bind(this,view);
+
         getRecipeData();
         prepareRecyclerview();
 
@@ -98,7 +89,14 @@ public class RecipeDetailsFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
-        recipe = (Recipe) bundle.getSerializable("recipe");
+        if (getActivity().getIntent() != null && getActivity().getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
+
+            String recipeData = getActivity().getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
+            Gson gson = new Gson();
+            recipe = gson.fromJson(recipeData,Recipe.class);
+
+        }else
+            recipe = (Recipe) bundle.getSerializable("recipe");
 
         getActivity().setTitle(recipe.getName());
 

@@ -54,17 +54,18 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         this.sharedPreferencesService = new SharedPreferencesService(this);
+
+        if (findViewById(R.id.txt_id) != null)
+            twoPane = true;
+        else
+            twoPane = false;
+
         prepareRecyclerview();
         if (savedInstanceState == null){
             checkNetworkConnection(this);
 
         }
         setDataToAdapter();
-
-        if (findViewById(R.id.txt_id) != null)
-            twoPane = true;
-        else
-            twoPane = false;
 
     }
 
@@ -145,22 +146,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
         Gson gson = new Gson();
         String recipeData = gson.toJson(recipeList.get(itemId - 1));
         sharedPreferencesService.storeRecipe(recipeData);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (getIntent() != null && getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
-
-            String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
-            Gson gson = new Gson();
-            setIntent(null);
-
-            EventBus.getDefault().post(gson.fromJson(recipeData,Recipe.class));
-
-        }
-
     }
 
     @Override

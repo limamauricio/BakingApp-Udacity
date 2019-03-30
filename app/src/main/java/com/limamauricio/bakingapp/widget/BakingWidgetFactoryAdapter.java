@@ -39,6 +39,12 @@ public class BakingWidgetFactoryAdapter implements RemoteViewsService.RemoteView
     @Override
     public void onDataSetChanged() {
 
+        ingredientList.clear();
+        Gson gson = new Gson();
+        String recipeData = sharedPreferencesService.getStoredData();
+        recipe = gson.fromJson(recipeData,Recipe.class);
+        ingredientList = recipe.getIngredients();
+
     }
 
     @Override
