@@ -22,7 +22,7 @@ import lombok.Getter;
 
 public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
     final private ItemClickListener mItemClickListener;
 
     @Getter
@@ -72,7 +72,7 @@ public class RecipeAdapter extends RecyclerView.Adapter<RecipeAdapter.RecipeView
         @BindView(R.id.recipe_img_background)
         ImageView imgRecipe;
 
-        public RecipeViewHolder(@NonNull View itemView) {
+        RecipeViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this,itemView);

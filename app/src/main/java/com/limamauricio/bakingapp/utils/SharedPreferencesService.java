@@ -4,7 +4,7 @@ import android.content.Context;
 
 public class SharedPreferencesService {
 
-    private SharedPreferencesRepository sharedPreferencesRepository;
+    private final SharedPreferencesRepository sharedPreferencesRepository;
     private static final String RECIPE_TO_WIDGET = "com.limamauricio.bakingapp.recipe.widget";
 
     public SharedPreferencesService(Context context){

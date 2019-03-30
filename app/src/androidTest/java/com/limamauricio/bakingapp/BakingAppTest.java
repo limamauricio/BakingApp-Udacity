@@ -30,7 +30,7 @@ public class BakingAppTest {
     private IdlingResource mIdlingResource;
 
     @Rule
-    public IntentsTestRule<MainActivity> mActivityTestRule = new IntentsTestRule<>(
+    public final IntentsTestRule<MainActivity> mActivityTestRule = new IntentsTestRule<>(
             MainActivity.class);
 
 

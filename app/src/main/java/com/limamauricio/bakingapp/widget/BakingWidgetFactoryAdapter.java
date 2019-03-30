@@ -14,12 +14,12 @@ import com.limamauricio.bakingapp.utils.SharedPreferencesService;
 
 import java.util.List;
 
-public class BakingWidgetFactoryAdapter implements RemoteViewsService.RemoteViewsFactory {
+class BakingWidgetFactoryAdapter implements RemoteViewsService.RemoteViewsFactory {
 
-    private Context mContext;
+    private final Context mContext;
     private Recipe recipe;
     private List<Ingredient> ingredientList;
-    private SharedPreferencesService sharedPreferencesService;
+    private final SharedPreferencesService sharedPreferencesService;
 
     public BakingWidgetFactoryAdapter(Context context, Intent intent){
 

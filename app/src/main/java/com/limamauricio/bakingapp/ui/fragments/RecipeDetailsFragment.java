@@ -16,14 +16,9 @@ import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Ingredient;
 import com.limamauricio.bakingapp.model.Recipe;
 import com.limamauricio.bakingapp.model.Step;
-import com.limamauricio.bakingapp.ui.RecipeDetailsActivity;
 import com.limamauricio.bakingapp.ui.adapter.RecipeIngredientsAdapter;
 import com.limamauricio.bakingapp.ui.adapter.RecipeStepsAdapter;
 import com.limamauricio.bakingapp.widget.BakingAppWidget;
-
-import org.greenrobot.eventbus.EventBus;
-import org.greenrobot.eventbus.Subscribe;
-import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.List;
 
@@ -40,12 +35,8 @@ public class RecipeDetailsFragment extends Fragment {
 
     private List<Step> steps;
     private List<Ingredient> ingredients;
-    private Recipe recipe;
 
-    private RecipeIngredientsAdapter ingredientsAdapter;
-    private RecipeStepsAdapter stepsAdapter;
-
-    OnStepClickListener mCallback;
+    private OnStepClickListener mCallback;
 
     public interface OnStepClickListener{
 
@@ -89,6 +80,7 @@ public class RecipeDetailsFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
         Bundle bundle = intent.getExtras();
+        Recipe recipe;
         if (getActivity().getIntent() != null && getActivity().getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
 
             String recipeData = getActivity().getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
@@ -120,14 +112,14 @@ public class RecipeDetailsFragment extends Fragment {
 
         ingredientsRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext()));
-        ingredientsAdapter = new RecipeIngredientsAdapter(getContext());
+        RecipeIngredientsAdapter ingredientsAdapter = new RecipeIngredientsAdapter(getContext());
         ingredientsRecyclerView.setAdapter(ingredientsAdapter);
 
         stepsRecyclerView.setLayoutManager(
                 new LinearLayoutManager(getContext())
         );
 
-        stepsAdapter = new RecipeStepsAdapter(getContext());
+        RecipeStepsAdapter stepsAdapter = new RecipeStepsAdapter(getContext());
         stepsRecyclerView.setAdapter(stepsAdapter);
 
         stepsAdapter.setSteps(steps);

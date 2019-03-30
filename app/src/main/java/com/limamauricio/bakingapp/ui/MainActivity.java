@@ -34,7 +34,6 @@ import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.ItemClickListener{
 
-    private Call<List<Recipe>> call;
     private List<Recipe> recipeList;
 
     @SuppressWarnings("WeakerAccess")
@@ -64,10 +63,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
         ButterKnife.bind(this);
         this.sharedPreferencesService = new SharedPreferencesService(this);
 
-        if (findViewById(R.id.txt_id) != null)
-            twoPane = true;
-        else
-            twoPane = false;
+        twoPane = findViewById(R.id.two_panel_id) != null;
 
         prepareRecyclerview();
         if (savedInstanceState == null){
@@ -96,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
 
         if (Utils.checkInternetConnection(getApplicationContext())){
 
-            call  = proxy.getAll();
+            Call<List<Recipe>> call = proxy.getAll();
 
             call.enqueue(new Callback<List<Recipe>>() {
                 @Override

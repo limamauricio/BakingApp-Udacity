@@ -19,7 +19,6 @@ import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDetailsFragment.OnStepClickListener {
 
-    private Recipe recipe;
     private List<Step> steps;
     private Step step;
     private boolean mTwoPanel;
@@ -55,6 +54,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
+        Recipe recipe;
         if (getIntent() != null && getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
 
             String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);

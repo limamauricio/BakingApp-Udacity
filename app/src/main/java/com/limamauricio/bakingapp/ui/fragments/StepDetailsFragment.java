@@ -37,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import lombok.Setter;
 
+@SuppressWarnings("ALL")
 public class StepDetailsFragment extends Fragment {
 
     @BindView(R.id.step_description_id)
@@ -171,6 +172,7 @@ public class StepDetailsFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_next_step)
     public void onBtnNextClicked(){
         releasePlayer();
@@ -182,6 +184,7 @@ public class StepDetailsFragment extends Fragment {
 
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_prev_step)
     public void onBtnPrevClicked(){
         releasePlayer();

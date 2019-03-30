@@ -17,13 +17,13 @@ import com.limamauricio.bakingapp.utils.SharedPreferencesService;
  */
 public class BakingAppWidget extends AppWidgetProvider {
 
-    public static final String FILTER_RECIPE = "FILTER_RECIPE";
+    private static final String FILTER_RECIPE = "FILTER_RECIPE";
     public static final String FILTER_RECIPE_ITEM = "FILTER_RECIPE_ITEM";
-    public static final String OPEN_MAIN_ACTIVITY = "OPEN_MAIN_ACTIVITY";
+    private static final String OPEN_MAIN_ACTIVITY = "OPEN_MAIN_ACTIVITY";
     private SharedPreferencesService sharedPreferencesService;
 
-    static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
-                                int appWidgetId) {
+    private static void updateAppWidget(Context context, AppWidgetManager appWidgetManager,
+                                        int appWidgetId) {
 
         Intent intent = new Intent(context,BakingAppWidgetService.class);
         intent.putExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,appWidgetId);

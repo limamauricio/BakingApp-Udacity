@@ -20,7 +20,7 @@ import lombok.Getter;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
 
     @Getter
     private List<Step> steps;
@@ -64,7 +64,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @BindView(R.id.step_name)
         TextView stepName;
 
-        public RecipeStepsViewHolder(@NonNull View itemView) {
+        RecipeStepsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this,itemView);

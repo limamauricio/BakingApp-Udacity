@@ -3,7 +3,7 @@ package com.limamauricio.bakingapp.utils;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SharedPreferencesRepository {
+class SharedPreferencesRepository {
 
     private final SharedPreferences sharedPreferences;
 
