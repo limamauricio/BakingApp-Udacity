@@ -20,7 +20,7 @@ import lombok.Getter;
 public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredientsAdapter.RecipeIngredientsViewHolder> {
 
 
-    private Context mContext;
+    private final Context mContext;
 
     @Getter
     private List<Ingredient> ingredients;
@@ -69,7 +69,7 @@ public class RecipeIngredientsAdapter extends RecyclerView.Adapter<RecipeIngredi
         @BindView(R.id.ingredient_qnt)
         TextView ingredientQnt;
 
-        public RecipeIngredientsViewHolder(@NonNull View itemView) {
+        RecipeIngredientsViewHolder(@NonNull View itemView) {
             super(itemView);
             ButterKnife.bind(this,itemView);
         }

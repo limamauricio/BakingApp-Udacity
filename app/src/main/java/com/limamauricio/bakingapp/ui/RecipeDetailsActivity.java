@@ -6,18 +6,19 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.Toast;
 
+import com.google.gson.Gson;
 import com.limamauricio.bakingapp.R;
 import com.limamauricio.bakingapp.model.Recipe;
 import com.limamauricio.bakingapp.model.Step;
 import com.limamauricio.bakingapp.ui.fragments.RecipeDetailsFragment;
 import com.limamauricio.bakingapp.ui.fragments.StepDetailsFragment;
+import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
 import java.io.Serializable;
 import java.util.List;
 
 public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDetailsFragment.OnStepClickListener {
 
-    private Recipe recipe;
     private List<Step> steps;
     private Step step;
     private boolean mTwoPanel;
@@ -27,6 +28,7 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_recipe_details);
+
         if(findViewById(R.id.relative_layout_id) != null){
             mTwoPanel = true;
 
@@ -34,7 +36,6 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
             if (savedInstanceState == null){
 
                 getRecipeData();
-                //getStepData();
                 initFragments();
 
             }else {
@@ -53,7 +54,15 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        recipe = (Recipe) bundle.getSerializable("recipe");
+        Recipe recipe;
+        if (getIntent() != null && getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
+
+            String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
+            Gson gson = new Gson();
+            recipe = gson.fromJson(recipeData,Recipe.class);
+
+        }else
+            recipe = (Recipe) bundle.getSerializable("recipe");
 
         setTitle(recipe.getName());
 
@@ -115,15 +124,4 @@ public class RecipeDetailsActivity extends AppCompatActivity implements RecipeDe
 
     }
 
-    private void getStepData() {
-        if (step == null || steps == null) {
-
-            Intent intent = getIntent();
-            Bundle bundle = intent.getExtras();
-            step = (Step) bundle.getSerializable("step");
-            steps = (List<Step>) bundle.getSerializable("stepList");
-            if (step == null)
-                step = steps.get(0);
-        }
-    }
 }

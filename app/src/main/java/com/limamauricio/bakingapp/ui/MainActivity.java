@@ -2,14 +2,15 @@ package com.limamauricio.bakingapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
+import android.support.annotation.VisibleForTesting;
+import android.support.test.espresso.IdlingResource;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -19,23 +20,20 @@ import com.limamauricio.bakingapp.proxy.Proxy;
 import com.limamauricio.bakingapp.proxy.ProxyFactory;
 import com.limamauricio.bakingapp.ui.adapter.RecipeAdapter;
 import com.limamauricio.bakingapp.utils.SharedPreferencesService;
+import com.limamauricio.bakingapp.utils.SimpleIdlingResource;
 import com.limamauricio.bakingapp.utils.Utils;
-import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
 import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lombok.Getter;
-import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
 
 public class MainActivity extends AppCompatActivity implements RecipeAdapter.ItemClickListener{
 
-    private Call<List<Recipe>> call;
     private List<Recipe> recipeList;
 
     @SuppressWarnings("WeakerAccess")
@@ -46,23 +44,33 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
     private boolean twoPane;
     private SharedPreferencesService sharedPreferencesService;
 
+    @Nullable
+    private SimpleIdlingResource mIdlingResource;
+
+    @VisibleForTesting
+    @NonNull
+    public IdlingResource getIdlingResource() {
+        if (mIdlingResource == null) {
+            mIdlingResource = new SimpleIdlingResource();
+        }
+        return mIdlingResource;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
         this.sharedPreferencesService = new SharedPreferencesService(this);
+
+        twoPane = findViewById(R.id.two_panel_id) != null;
+
         prepareRecyclerview();
         if (savedInstanceState == null){
             checkNetworkConnection(this);
 
         }
         setDataToAdapter();
-
-        if (findViewById(R.id.txt_id) != null)
-            twoPane = true;
-        else
-            twoPane = false;
 
     }
 
@@ -84,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
 
         if (Utils.checkInternetConnection(getApplicationContext())){
 
-            call  = proxy.getAll();
+            Call<List<Recipe>> call = proxy.getAll();
 
             call.enqueue(new Callback<List<Recipe>>() {
                 @Override
@@ -112,6 +120,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
 
         recipeAdapter.setRecipes(recipeList);
         recipeRecyclerView.setAdapter(recipeAdapter);
+        getIdlingResource();
 
     }
 
@@ -139,31 +148,9 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
     @Override
     public void onAddToWidgetClickListener(int itemId) {
         Toast.makeText(MainActivity.this, recipeList.get(itemId - 1).getName(), Toast.LENGTH_SHORT).show();
-        //setRecipeItem();
         Gson gson = new Gson();
         String recipeData = gson.toJson(recipeList.get(itemId - 1));
         sharedPreferencesService.storeRecipe(recipeData);
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        if (getIntent() != null && getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM) != null){
-
-            String recipeData = getIntent().getStringExtra(BakingAppWidget.FILTER_RECIPE_ITEM);
-            Gson gson = new Gson();
-            gson.fromJson(recipeData,Recipe.class);
-            setIntent(null);
-
-            Intent intent = new Intent(MainActivity.this,RecipeDetailsActivity.class);
-            Bundle bundle = new Bundle();
-            bundle.putSerializable("recipe",gson.fromJson(recipeData,Recipe.class));
-            intent.putExtras(bundle);
-            startActivity(intent);
-
-        }
-
     }
 
     @Override

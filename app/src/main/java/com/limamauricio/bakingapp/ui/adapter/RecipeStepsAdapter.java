@@ -20,7 +20,7 @@ import lombok.Getter;
 
 public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.RecipeStepsViewHolder> {
 
-    private Context mContext;
+    private final Context mContext;
 
     @Getter
     private List<Step> steps;
@@ -47,20 +47,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         recipeStepsViewHolder.stepName.setText(step.getId()+1
             + ". "+step.getShortDescription());
 
-        /*recipeStepsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext.getApplicationContext(), StepDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("step",step);
-                bundle.putSerializable("stepList", (Serializable) steps);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
-
-            }
-        });*/
-
     }
 
     @Override
@@ -78,7 +64,7 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         @BindView(R.id.step_name)
         TextView stepName;
 
-        public RecipeStepsViewHolder(@NonNull View itemView) {
+        RecipeStepsViewHolder(@NonNull View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
             ButterKnife.bind(this,itemView);

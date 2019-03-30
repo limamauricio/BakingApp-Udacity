@@ -1,5 +1,6 @@
 package com.limamauricio.bakingapp.ui.fragments;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.C;
@@ -35,6 +37,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import lombok.Setter;
 
+@SuppressWarnings("ALL")
 public class StepDetailsFragment extends Fragment {
 
     @BindView(R.id.step_description_id)
@@ -169,6 +172,7 @@ public class StepDetailsFragment extends Fragment {
         }
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_next_step)
     public void onBtnNextClicked(){
         releasePlayer();
@@ -180,6 +184,7 @@ public class StepDetailsFragment extends Fragment {
 
     }
 
+    @SuppressWarnings("unused")
     @OnClick(R.id.btn_prev_step)
     public void onBtnPrevClicked(){
         releasePlayer();
@@ -244,4 +249,5 @@ public class StepDetailsFragment extends Fragment {
             releasePlayer();
         }
     }
+
 }
