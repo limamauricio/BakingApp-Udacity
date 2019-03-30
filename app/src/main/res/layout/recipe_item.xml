@@ -36,14 +36,13 @@
                     android:layout_marginBottom="8dp"
                     android:textSize="20sp"
                     android:textStyle="bold"
-                    android:layout_weight="1"
-                    android:text="dsadasdaadsa"/>
+                    android:layout_weight="1"/>
 
                 <android.support.v7.widget.AppCompatButton
                     android:id="@+id/btnAddWidget"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ADD WIDGET"
+                    android:text="@string/add_widget_res"
                     android:textColor="@color/colorPrimaryDark"
                     app:backgroundTint="#FFFF"/>
 

@@ -21,7 +21,7 @@
            android:id="@+id/txt_no_video"
            android:visibility="gone"
            android:gravity="center"
-           android:text="No video was found!"/>
+           android:text="@string/no_video_was_found"/>
 
    </LinearLayout>
 
@@ -31,8 +31,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/step_description_id"
         android:layout_marginTop="10dp"
-        android:layout_below="@+id/video_player_layout"
-        android:text="STEP DESCRIPTION"/>
+        android:layout_below="@+id/video_player_layout"/>
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -46,27 +45,26 @@
             android:id="@+id/btn_prev_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="PREV"
+            android:text="@string/prev"
             android:textColor="@color/colorPrimaryDark"
             app:backgroundTint="#FFFF"/>
 
         <TextView
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:textSize="18dp"
+            android:textSize="18sp"
             android:id="@+id/txt_current_step"
             android:layout_gravity="center"
-            android:layout_weight="2"
-            android:text="1 / 8"/>
+            android:layout_weight="2"/>
 
         <android.support.v7.widget.AppCompatButton
             android:id="@+id/btn_next_step"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="NEXT"
+            android:text="@string/next"
             android:textColor="@color/colorPrimaryDark"
             app:backgroundTint="#FFFF"/>
     </LinearLayout>
