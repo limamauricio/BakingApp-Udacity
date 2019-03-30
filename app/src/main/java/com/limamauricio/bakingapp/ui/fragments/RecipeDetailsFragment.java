@@ -61,7 +61,7 @@ public class RecipeDetailsFragment extends Fragment {
             mCallback = (OnStepClickListener) context;
         } catch (ClassCastException e) {
             throw new ClassCastException(context.toString()
-                    + " must implement OnStepClickListener");
+                    + "OnStepClickListener implementation is missing");
         }
     }
 

@@ -2,14 +2,11 @@ package com.limamauricio.bakingapp.ui;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.View;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.gson.Gson;
@@ -20,17 +17,12 @@ import com.limamauricio.bakingapp.proxy.ProxyFactory;
 import com.limamauricio.bakingapp.ui.adapter.RecipeAdapter;
 import com.limamauricio.bakingapp.utils.SharedPreferencesService;
 import com.limamauricio.bakingapp.utils.Utils;
-import com.limamauricio.bakingapp.widget.BakingAppWidget;
-
-import org.greenrobot.eventbus.EventBus;
 
 import java.io.Serializable;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import lombok.Getter;
-import lombok.Setter;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -142,7 +134,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Ite
     @Override
     public void onAddToWidgetClickListener(int itemId) {
         Toast.makeText(MainActivity.this, recipeList.get(itemId - 1).getName(), Toast.LENGTH_SHORT).show();
-        //setRecipeItem();
         Gson gson = new Gson();
         String recipeData = gson.toJson(recipeList.get(itemId - 1));
         sharedPreferencesService.storeRecipe(recipeData);

@@ -47,20 +47,6 @@ public class RecipeStepsAdapter extends RecyclerView.Adapter<RecipeStepsAdapter.
         recipeStepsViewHolder.stepName.setText(step.getId()+1
             + ". "+step.getShortDescription());
 
-        /*recipeStepsViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-                Intent intent = new Intent(mContext.getApplicationContext(), StepDetailActivity.class);
-                Bundle bundle = new Bundle();
-                bundle.putSerializable("step",step);
-                bundle.putSerializable("stepList", (Serializable) steps);
-                intent.putExtras(bundle);
-                mContext.startActivity(intent);
-
-            }
-        });*/
-
     }
 
     @Override

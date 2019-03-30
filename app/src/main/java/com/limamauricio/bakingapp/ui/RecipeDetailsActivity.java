@@ -14,8 +14,6 @@ import com.limamauricio.bakingapp.ui.fragments.RecipeDetailsFragment;
 import com.limamauricio.bakingapp.ui.fragments.StepDetailsFragment;
 import com.limamauricio.bakingapp.widget.BakingAppWidget;
 
-import org.greenrobot.eventbus.EventBus;
-
 import java.io.Serializable;
 import java.util.List;
 

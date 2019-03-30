@@ -13,11 +13,11 @@ public class SharedPreferencesService {
     }
 
     public void storeRecipe(String data){
-        sharedPreferencesRepository.armazenar(RECIPE_TO_WIDGET,data);
+        sharedPreferencesRepository.store(RECIPE_TO_WIDGET,data);
     }
 
     public String getStoredData(){
-        return sharedPreferencesRepository.recuperarString(RECIPE_TO_WIDGET);
+        return sharedPreferencesRepository.getString(RECIPE_TO_WIDGET);
     }
 
 
