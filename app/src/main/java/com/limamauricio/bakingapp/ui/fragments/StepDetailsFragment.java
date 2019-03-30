@@ -1,5 +1,6 @@
 package com.limamauricio.bakingapp.ui.fragments;
 
+import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -9,6 +10,7 @@ import android.support.v7.widget.AppCompatButton;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 
 import com.google.android.exoplayer2.C;
@@ -244,4 +246,5 @@ public class StepDetailsFragment extends Fragment {
             releasePlayer();
         }
     }
+
 }
